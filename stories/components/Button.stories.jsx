@@ -6,6 +6,7 @@ import { fn } from '@storybook/test';
 export default {
   title: 'Components/Button',
   component: 'wire-button',
+  tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
@@ -80,11 +81,6 @@ export default {
         type: { summary: 'string' },
         defaultValue: { summary: 'left' },
       },
-    },
-    children: {
-      table: {
-        disable: true
-      }
     }
   },
 };
@@ -116,48 +112,48 @@ const Template = (args) => {
 export const Primary = Template.bind({});
 Primary.args = {
   color: 'primary',
-  children: 'Primary Button',
+  label: 'Primary Button',
   onClick: fn(),
 };
 
 export const Secondary = Template.bind({});
 Secondary.args = {
   color: 'secondary',
-  children: 'Secondary Button',
+  label: 'Secondary Button',
   onClick: fn(),
 };
 
 export const Tertiary = Template.bind({});
 Tertiary.args = {
   color: 'tertiary',
-  children: 'Tertiary Button',
+  label: 'Tertiary Button',
   onClick: fn(),
 };
 
 export const Small = Template.bind({});
 Small.args = {
   size: 'small',
-  children: 'Small Button',
+  label: 'Small Button',
   onClick: fn(),
 };
 
 export const Medium = Template.bind({});
 Medium.args = {
   size: 'medium',
-  children: 'Medium Button',
+  label: 'Medium Button',
   onClick: fn(),
 };
 
 export const Large = Template.bind({});
 Large.args = {
   size: 'large',
-  children: 'Large Button',
+  label: 'Large Button',
   onClick: fn(),
 };
 
 export const Disabled = Template.bind({});
 Disabled.args = {
   disabled: true,
-  children: 'Disabled Button',
+  label: 'Disabled Button',
   onClick: fn(),
 }; 

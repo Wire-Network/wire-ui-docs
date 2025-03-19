@@ -1,20 +1,29 @@
-// Change the import path to use the published package
+import '@wireio/ui-library/dist/wire-ui/wire-ui.css';
 import { defineCustomElements } from '@wireio/ui-library/dist/loader';
-// or possibly one of these depending on your package structure:
-// import { defineCustomElements } from '@wireio/ui-library/loader/index.js';
-// import { defineCustomElements } from '@wireio/ui-library/dist/esm/loader';
 import React from 'react';
 
-// Register components immediately
-if (typeof window !== 'undefined') {
-  defineCustomElements(window, {
-    resourcesUrl: '/assets/', // Point to where your assets are in the static build
+// Create a global promise to track component registration
+let componentRegistrationPromise = null;
+
+// Function to register components
+const registerComponents = async () => {
+  if (componentRegistrationPromise) return componentRegistrationPromise;
+  
+  componentRegistrationPromise = defineCustomElements(window, {
+    resourcesUrl: '/assets/',
     syncQueue: true,
   }).then(() => {
     console.log('Stencil components registered successfully');
   }).catch(error => {
     console.error('Failed to register Stencil components:', error);
   });
+  
+  return componentRegistrationPromise;
+};
+
+// Register components immediately
+if (typeof window !== 'undefined') {
+  registerComponents();
 }
 
 /** @type { import('@storybook/react').Preview } */
@@ -30,18 +39,29 @@ const preview = {
       },
     },
     docs: {
-      // Ensure custom elements are properly rendered in docs
       source: {
         type: 'dynamic',
         excludeDecorators: true,
-      },
-    },
+      }
+    }
   },
+  // Add decorator to ensure components are registered before each story
+  decorators: [
+    function StoryDecorator(Story) {
+      React.useEffect(() => {
+        // Force a re-registration on each story change
+        componentRegistrationPromise = null;
+        registerComponents();
+      }, []);
+
+      return React.createElement(Story);
+    }
+  ]
 };
 
 // Add this to help React work better with web components
 if (typeof window !== 'undefined') {
-  window.React = React; // Ensure React is available globally
+  window.React = React;
 }
 
 export default preview;
