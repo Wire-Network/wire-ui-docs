@@ -1,11 +1,12 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// Use a different variable name to avoid conflicts
+const currentFilePath = fileURLToPath(import.meta.url);
+const currentDirPath = path.dirname(currentFilePath);
 
 function getAbsolutePath(value) {
-  return path.resolve(__dirname, value);
+  return path.resolve(currentDirPath, value);
 }
 
 /** @type { import('@storybook/react-vite').StorybookConfig } */
@@ -36,7 +37,7 @@ const config = {
         ...config.resolve,
         alias: {
           ...config.resolve?.alias,
-          '@wireio/ui-library': path.resolve(__dirname, '../node_modules/@wireio/ui-library')
+          '@wireio/ui-library': path.resolve(currentDirPath, '../node_modules/@wireio/ui-library')
         }
       },
       optimizeDeps: {
