@@ -1,0 +1,14 @@
+[Unit]
+Description=Wire UI Docs http-server
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/opt/www/wire-ui-docs
+ExecStart=/usr/bin/npm run start
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target 
