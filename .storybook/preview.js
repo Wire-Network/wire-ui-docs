@@ -61,14 +61,24 @@ const preview = {
         type: 'dynamic',
         excludeDecorators: true,
       },
-      // Add these parameters to optimize Docs view performance
       inlineStories: false,
       iframeHeight: 400,
       transformSource: (src) => {
-        // Remove any console.log statements from the source code
         return src.replace(/console\.log\([^)]*\);/g, '');
       }
-    }
+    },
+    options: {
+      storySort: {
+        order: ['Introduction', 'Guides', 'Components', '*']
+      }
+    },
+    previewTabs: {
+      'storybook/docs/panel': {
+        index: -1
+      }
+    },
+    viewMode: 'docs',
+    defaultPath: '/docs/introduction--introduction'
   },
   // Add decorator to ensure components are registered before each story
   decorators: [
@@ -94,5 +104,5 @@ const preview = {
 if (typeof window !== 'undefined') {
   window.React = React;
 }
-
 export default preview;
+

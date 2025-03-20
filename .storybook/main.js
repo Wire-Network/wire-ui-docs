@@ -11,7 +11,12 @@ function getAbsolutePath(value) {
 
 /** @type { import('@storybook/react-vite').StorybookConfig } */
 const config = {
-  stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: [
+    // Put Introduction first to ensure it's loaded first
+    '../stories/Introduction.mdx',
+    '../stories/**/*.mdx',
+    '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'
+  ],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -24,7 +29,13 @@ const config = {
     options: {},
   },
   docs: {
-    autodocs: 'tag',
+    autodocs: true,
+    defaultName: 'Documentation',
+  },
+  // Add this to ensure docs are the default view
+  features: {
+    storyStoreV7: true,
+    buildStoriesJson: true,
   },
   staticDirs: [
     // Serve package assets at the /assets path

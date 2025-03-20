@@ -7,13 +7,12 @@
     "setup": "mkdir -p stories/components stories/guides",
     "storybook": "storybook dev -p 6006",
     "build": "storybook build",
-    "start": "serve storybook-static -p 6006"
+    "start": "http-server storybook-static -p 6006 --cors"
   },
   "dependencies": {
-    "@wireio/ui-library": "0.0.9",
+    "@wireio/ui-library": "0.0.10",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "serve": "^14.2.1"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.4",
@@ -28,6 +27,7 @@
     "@storybook/react-vite": "^8.6.4",
     "@storybook/test": "^8.6.4",
     "@storybook/theming": "^8.6.4",
+    "http-server": "^14.1.1",
     "storybook": "^8.6.4",
     "vite": "^5.0.12"
   }
