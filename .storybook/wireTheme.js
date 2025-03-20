@@ -5,7 +5,7 @@ export default create({
   
   // Brand
   brandTitle: 'Wire UI Library',
-  brandUrl: 'https://wireio.com',
+  brandUrl: 'https://ui.wire.foundation',
   brandTarget: '_blank',
   brandImage: './wire-logo.svg', // This will be added later
   
