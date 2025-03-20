@@ -24,17 +24,13 @@ export default defineConfig({
   // Optimize dependencies
   optimizeDeps: {
     include: ['react', 'react-dom'],
-    // Don't exclude the loader - we need it for Stencil components
   },
   
   // Configure plugins if needed
   plugins: [],
   
-  // Resolve aliases for the UI library
+  // Resolve aliases
   resolve: {
-    alias: {
-      '@wireio/ui-library': resolve(__dirname, '../packages/core'),
-    },
     dedupe: ['react', 'react-dom'],
   },
 }); 

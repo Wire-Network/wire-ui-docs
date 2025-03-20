@@ -4,21 +4,39 @@ import React from 'react';
 
 // Create a global promise to track component registration
 let componentRegistrationPromise = null;
+let isRegistering = false;
 
 // Function to register components
 const registerComponents = async () => {
-  if (componentRegistrationPromise) return componentRegistrationPromise;
+  if (isRegistering) {
+    return componentRegistrationPromise;
+  }
+
+  if (componentRegistrationPromise) {
+    return componentRegistrationPromise;
+  }
+
+  isRegistering = true;
   
-  componentRegistrationPromise = defineCustomElements(window, {
-    resourcesUrl: '/assets/',
-    syncQueue: true,
-  }).then(() => {
-    console.log('Stencil components registered successfully');
-  }).catch(error => {
-    console.error('Failed to register Stencil components:', error);
-  });
-  
-  return componentRegistrationPromise;
+  try {
+    componentRegistrationPromise = defineCustomElements(window, {
+      resourcesUrl: '/assets/',
+      syncQueue: true,
+    }).then(() => {
+      isRegistering = false;
+    }).catch(error => {
+      console.error('Failed to register Stencil components:', error);
+      componentRegistrationPromise = null;
+      isRegistering = false;
+    });
+    
+    return componentRegistrationPromise;
+  } catch (error) {
+    console.error('Error during registration setup:', error);
+    componentRegistrationPromise = null;
+    isRegistering = false;
+    throw error;
+  }
 };
 
 // Register components immediately
@@ -42,6 +60,13 @@ const preview = {
       source: {
         type: 'dynamic',
         excludeDecorators: true,
+      },
+      // Add these parameters to optimize Docs view performance
+      inlineStories: false,
+      iframeHeight: 400,
+      transformSource: (src) => {
+        // Remove any console.log statements from the source code
+        return src.replace(/console\.log\([^)]*\);/g, '');
       }
     }
   },
@@ -49,9 +74,15 @@ const preview = {
   decorators: [
     function StoryDecorator(Story) {
       React.useEffect(() => {
-        // Force a re-registration on each story change
-        componentRegistrationPromise = null;
-        registerComponents();
+        // Only attempt registration if no components are registered
+        if (!window.customElements || Object.keys(window.customElements).length === 0) {
+          registerComponents();
+        }
+
+        // Cleanup function
+        return () => {
+          // Don't do any cleanup here - let the components stay registered
+        };
       }, []);
 
       return React.createElement(Story);
