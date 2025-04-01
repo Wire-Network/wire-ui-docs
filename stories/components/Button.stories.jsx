@@ -13,6 +13,20 @@ export default {
         component: 'A customizable button component with various styles and sizes.',
       },
     },
+    options: {
+      storySort: {
+        order: [
+          'Primary',
+          'Secondary',
+          'Tertiary',
+          'Gradient',
+          'Small',
+          'Medium',
+          'Large',
+          'Disabled'
+        ]
+      }
+    }
   },
   argTypes: {
     label: {
@@ -23,22 +37,21 @@ export default {
         defaultValue: { summary: 'Button' },
       },
     },
-    color: {
+    role: {
       control: { type: 'select' },
       options: ['primary', 'secondary', 'tertiary'],
-      description: 'The color of the button',
+      description: 'The role of the button which determines its style',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'primary' },
       },
     },
-    variant: {
+    color: {
       control: { type: 'select' },
-      options: ['filled', 'outline'],
-      description: 'The visual style of the button',
+      options: ['blue', 'white', 'gradient'],
+      description: 'The color of the button. When set, this overrides the role-based color.',
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: 'filled' },
       },
     },
     size: {
@@ -97,8 +110,8 @@ const Template = (args) => {
   
   return (
     <wire-button
+      role={props.role}
       color={props.color}
-      variant={props.variant}
       size={props.size}
       icon={props.icon}
       iconPosition={props.iconPosition}
@@ -111,22 +124,38 @@ const Template = (args) => {
 
 export const Primary = Template.bind({});
 Primary.args = {
-  color: 'primary',
+  role: 'primary',
   label: 'Primary Button',
   onClick: fn(),
 };
 
 export const Secondary = Template.bind({});
 Secondary.args = {
-  color: 'secondary',
+  role: 'secondary',
   label: 'Secondary Button',
   onClick: fn(),
 };
 
 export const Tertiary = Template.bind({});
 Tertiary.args = {
-  color: 'tertiary',
+  role: 'tertiary',
   label: 'Tertiary Button',
+  onClick: fn(),
+};
+
+export const FeaturedPrimary = Template.bind({});
+FeaturedPrimary.args = {
+  role: 'primary',
+  color: 'gradient',
+  label: 'Primary Button',
+  onClick: fn(),
+};
+
+export const FeaturedSecondary = Template.bind({});
+FeaturedSecondary.args = {
+  role: 'secondary',
+  color: 'gradient',
+  label: 'Secondary Button',
   onClick: fn(),
 };
 

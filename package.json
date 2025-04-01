@@ -10,7 +10,7 @@
     "start": "http-server storybook-static -p 6006 --cors"
   },
   "dependencies": {
-    "@wireio/ui-library": "0.0.10",
+    "@wireio/ui-library": "^0.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
